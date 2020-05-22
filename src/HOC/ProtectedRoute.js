@@ -4,12 +4,12 @@ import { useSelector } from 'react-redux'
 import { ROUTES } from 'consts';
 
 export default function ProtectedRoute({ Path, Component }) {
-  const loginData = useSelector(state => state.loginData);
-  console.log("status", loginData);
+  const accountData = useSelector(state => state.accountData);
+  console.log("status", accountData);
   return (
     <Route
       path={Path}
-      render={() => loginData.loginStatus ? <Component /> : <Redirect to={ROUTES.LOGIN} />}
+      render={() => accountData.userInfo ? <Component /> : <Redirect to={ROUTES.LOGIN} />}
     />
   );
 }

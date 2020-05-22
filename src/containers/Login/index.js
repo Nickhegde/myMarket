@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom';
-import { setLoginStatus } from 'actions';
+import { loginUser } from 'actions';
 import { ROUTES, STRINGS } from 'consts';
 import logo from './logo.svg';
 
@@ -12,7 +12,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
-  const loginData = useSelector(state => state.loginData);
+  const accountData = useSelector(state => state.accountData);
 
   const onUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -23,10 +23,10 @@ export default function Login() {
   }
 
   const onLogin = () => {
-    setLoginStatus(dispatch, { username, password });
+    loginUser(dispatch, { username, password });
   }
 
-  if (loginData.loginStatus) {
+  if (accountData.userInfo) {
     return <Redirect to={ROUTES.DASHBOARD} />;
   } else {
     return (
@@ -37,10 +37,10 @@ export default function Login() {
             <div className='title'>{STRINGS.MY_MARKET}</div>
           </header>
           <form className='login-form'>
-            <label for='username'>{STRINGS.USERNAME}</label>
+            <label htmlFor='username'>{STRINGS.USERNAME}</label>
             <input className='username-field' type='text' id='username' name='username' value={username} onChange={onUsernameChange}></input>
-            <label for='password'>{STRINGS.PASSWORD}</label>
-            <input className='password-field' type='password' id='password' name='password' value={password} onChange={onPasswordChange}></input>
+            <label htmlFor='password'>{STRINGS.PASSWORD}</label>
+            <input className='password-field' type='password' id='password' name='password' value={password} onChange={onPasswordChange} autoComplete='on'></input>
           </form>
           <button className='login-btn' onClick={onLogin} >
             {STRINGS.LOGIN}

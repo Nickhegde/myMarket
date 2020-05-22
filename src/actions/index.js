@@ -1,5 +1,5 @@
-import { LOGIN } from './types';
+import { LOGINTYPE } from './types';
 
-export const setLoginStatus = (dispatch, userInfo) => {
-  dispatch({ type: LOGIN.SET_STATUS, payload: userInfo });
+export const loginUser = (dispatch, userInfo) => {
+  dispatch({ type: LOGINTYPE.LOGIN, payload: userInfo });
 }

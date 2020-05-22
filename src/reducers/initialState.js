@@ -1,3 +1,9 @@
 export const INITIAL_STATE = {
-  LOGIN_STATE: false
+  ACCOUNT: {
+    loginInprogress: false,
+    loginErrorMessage: '',
+    logoutInprogress: false,
+    logoutErrorMessage: '',
+    userInfo: false
+  },
 }
