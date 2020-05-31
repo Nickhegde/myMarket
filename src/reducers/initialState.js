@@ -1,9 +1,12 @@
 export const INITIAL_STATE = {
   ACCOUNT: {
     loginInprogress: false,
-    loginErrorMessage: '',
+    loginErrorMessage: "",
+    registerInprogress: false,
+    registerErrorMessage: "",
     logoutInprogress: false,
-    logoutErrorMessage: '',
-    userInfo: false
+    logoutErrorMessage: "",
+    userInfo: false,
   },
-}
+  SHOW_LOADER: false,
+};
