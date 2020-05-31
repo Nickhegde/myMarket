@@ -1,6 +1,8 @@
-import { combineReducers } from 'redux';
-import accountReducer from 'reducers/account';
+import { combineReducers } from "redux";
+import accountReducer from "reducers/account";
+import showLoaderReducer from "reducers/showLoader";
 
 export default combineReducers({
-  accountData: accountReducer
-})
+  accountData: accountReducer,
+  showLoader: showLoaderReducer,
+});

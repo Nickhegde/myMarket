@@ -1,0 +1,9 @@
+@import "assets/styles/colors.scss";
+
+.register-container {
+  background-color: $Background;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
