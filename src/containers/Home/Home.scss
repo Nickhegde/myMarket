@@ -5,7 +5,8 @@
   min-height: 100vh;
   .home-btn-grp {
     text-align: center;
-    .home-login-signup-btn {
+    .home-login-signup-btn,
+    .home-logout-btn {
       display: inline-block;
       width: 150px;
       height: 30px;

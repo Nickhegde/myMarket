@@ -13,6 +13,9 @@ export default function Login() {
 
   const dispatch = useDispatch();
   const accountData = useSelector((state) => state.accountData);
+  if (accountData.userInfo) {
+    return <Redirect to={ROUTES.HOME}></Redirect>;
+  }
 
   const onUsernameChange = (e) => {
     setUsername(e.target.value);
