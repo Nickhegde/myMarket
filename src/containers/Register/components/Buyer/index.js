@@ -1,15 +1,30 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { sendOtp, setUserDetails } from "actions";
 import { STRINGS } from "consts";
 
 import "./Buyer.scss";
 
 export default function Buyer({ onRegister }) {
-  const [name, setName] = useState(""),
-    [mobileNo, setMobileNo] = useState(""),
-    [otp, setOtp] = useState(""),
-    [password, setPassword] = useState(""),
-    [pincode, setPincode] = useState(""),
-    [address, setAddress] = useState("");
+  const user = useSelector((state) => state.accountData.user);
+  const [name, setName] = useState(user ? user.name : ""),
+    [mobileNo, setMobileNo] = useState(user ? user.mobileNo : ""),
+    [otp, setOtp] = useState(''),
+    [password, setPassword] = useState(user ? user.password : ""),
+    [pincode, setPincode] = useState(user ? user.pincode : ""),
+    [address, setAddress] = useState(user ? user.address : "");
+  const dispatch = useDispatch();
+
+  const setUser = () => {
+    const user = {
+      name,
+      mobileNo,
+      password,
+      pincode,
+      address,
+    }
+    setUserDetails(dispatch, user);
+  }
 
   const onNameChange = (e) => {
     setName(e.target.value);
@@ -17,8 +32,11 @@ export default function Buyer({ onRegister }) {
   const onMobileNoChange = (e) => {
     setMobileNo(e.target.value);
   };
-  const onGetOtp = () => {};
-
+  const onGetOtp = (e) => {
+    e.preventDefault();
+    setUser();
+    sendOtp(dispatch, mobileNo);
+  };
   const onSetOtp = (e) => {
     setOtp(e.target.value);
   };
@@ -33,6 +51,8 @@ export default function Buyer({ onRegister }) {
   };
   const onSubmit = (e) => {
     e.preventDefault();
+    e.stopPropagation();
+    setUser();
     onRegister({
       name,
       mobileNo,
@@ -70,7 +90,7 @@ export default function Buyer({ onRegister }) {
             value={mobileNo}
             onChange={onMobileNoChange}
           ></input>
-          <button className="get-otp-button" onClick={onGetOtp}>
+          <button className={`get-otp-button ${mobileNo ? '' : 'disabled'}`} onClick={mobileNo ? onGetOtp : () => { }}>
             {STRINGS.GET_OTP}
           </button>
           <div className="otp-container">
@@ -93,7 +113,7 @@ export default function Buyer({ onRegister }) {
           name="password"
           value={password}
           onChange={onPasswordChange}
-          autoComplete="on"
+          autoComplete='on'
         ></input>
         <label htmlFor="pincode">{STRINGS.PINCODE}</label>
         <input
@@ -121,8 +141,8 @@ export default function Buyer({ onRegister }) {
               submitCheck
                 ? onSubmit
                 : (e) => {
-                    e.preventDefault();
-                  }
+                  e.preventDefault();
+                }
             }
           >
             {STRINGS.SUBMIT}

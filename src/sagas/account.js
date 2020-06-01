@@ -2,11 +2,14 @@ import axios from "axios";
 import { put, call } from "redux-saga/effects";
 import {
   LOGIN_URL,
+  OTP_URL,
   REGISTERAION_URL,
   LOGOUT_URL,
 } from "configuration/api-urls";
 import {
   LOGINTYPE,
+  OTP,
+  USER,
   REGISTERTYPE,
   LOGOUTTYPE,
   SHOW_LOADER,
@@ -15,6 +18,10 @@ import {
 const loginApi = (params) => {
   return axios.post(LOGIN_URL, params);
 };
+
+const sendOtpApi = (params) => {
+  return axios.post(OTP_URL, params);
+}
 
 const registerApi = (params) => {
   return axios.post(REGISTERAION_URL, params);
@@ -38,6 +45,18 @@ export const login = function* ({ payload }) {
   }
 };
 
+export const sendOTP = function* ({ payload }) {
+  try {
+    yield put({ type: SHOW_LOADER, payload: true });
+    const response = yield call(sendOtpApi, payload);
+    yield put({ type: OTP.SUCCEEDED, payload: response.data });
+  } catch (error) {
+    yield put({ type: OTP.FAILED, payload: error.message });
+  } finally {
+    yield put({ type: SHOW_LOADER, payload: false });
+  }
+};
+
 export const register = function* ({ payload }) {
   try {
     yield put({ type: SHOW_LOADER, payload: true });
@@ -48,7 +67,6 @@ export const register = function* ({ payload }) {
       payload: response.data,
     });
   } catch (error) {
-    console.log("error", error.message);
     yield put({ type: REGISTERTYPE.REGISTER_FAILED, payload: error.message });
   } finally {
     yield put({ type: REGISTERTYPE.REGISTER_IN_PROGRESS, payload: false });

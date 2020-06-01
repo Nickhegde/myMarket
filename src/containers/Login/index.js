@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
-import { loginUser } from "actions";
+import { loginUser, clearUserDetails } from "actions";
 import { ROUTES, STRINGS } from "consts";
 import logo from "./logo.svg";
 
@@ -10,9 +10,11 @@ import "./Login.scss";
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
   const dispatch = useDispatch();
   const accountData = useSelector((state) => state.accountData);
+
+  if (accountData.user) clearUserDetails(dispatch);
+
   if (accountData.userInfo) {
     return <Redirect to={ROUTES.HOME}></Redirect>;
   }
@@ -62,7 +64,7 @@ export default function Login() {
         <div className="login-btn-grp">
           <button
             className={`login-btn ${submitCheck ? "" : "disabled"}`}
-            onClick={submitCheck ? onLogin : () => {}}
+            onClick={submitCheck ? onLogin : () => { }}
           >
             {STRINGS.LOGIN}
           </button>

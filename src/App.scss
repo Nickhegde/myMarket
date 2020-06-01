@@ -37,7 +37,8 @@
     outline: none;
   }
   .submit-btn,
-  .login-btn {
+  .login-btn,
+  .get-otp-button {
     &.disabled {
       cursor: not-allowed;
       opacity: 0.5;

@@ -1,18 +1,36 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { sendOtp, setUserDetails } from "actions";
 import { STRINGS } from "consts";
 
 import "./Seller.scss";
 
 export default function Seller({ onRegister }) {
-  const [name, setName] = useState(""),
-    [mobileNo, setMobileNo] = useState(""),
+  const user = useSelector((state) => state.accountData.user);
+  const [name, setName] = useState(user ? user.name : ""),
+    [mobileNo, setMobileNo] = useState(user ? user.mobileNo : ""),
     [otp, setOtp] = useState(""),
-    [password, setPassword] = useState(""),
-    [type, setType] = useState("all"),
-    [address, setAddress] = useState(""),
-    [adhaarNo, setAdhaarNo] = useState(""),
-    [panNo, setPanNo] = useState(""),
-    [gstNo, setGstNo] = useState("");
+    [password, setPassword] = useState(user ? user.password : ""),
+    [type, setType] = useState(user ? user.type : ""),
+    [address, setAddress] = useState(user ? user.address : ""),
+    [adhaarNo, setAdhaarNo] = useState(user ? user.adhaarNo : ""),
+    [panNo, setPanNo] = useState(user ? user.panNo : ""),
+    [gstNo, setGstNo] = useState(user ? user.gstNo : "");
+  const dispatch = useDispatch();
+
+  const setUser = () => {
+    const user = {
+      name,
+      mobileNo,
+      password,
+      type,
+      address,
+      adhaarNo,
+      panNo,
+      gstNo
+    }
+    setUserDetails(dispatch, user);
+  }
 
   const onNameChange = (e) => {
     setName(e.target.value);
@@ -20,7 +38,11 @@ export default function Seller({ onRegister }) {
   const onMobileNoChange = (e) => {
     setMobileNo(e.target.value);
   };
-  const onGetOtp = (e) => {};
+  const onGetOtp = (e) => {
+    e.preventDefault();
+    setUser();
+    sendOtp(dispatch, mobileNo);
+  };
   const onSetOtp = (e) => {
     setOtp(e.target.value);
   };
@@ -44,6 +66,7 @@ export default function Seller({ onRegister }) {
   };
   const onSubmit = (e) => {
     e.preventDefault();
+    setUser();
     onRegister({
       name,
       mobileNo,
@@ -95,7 +118,7 @@ export default function Seller({ onRegister }) {
                 value={mobileNo}
                 onChange={onMobileNoChange}
               ></input>
-              <button className="get-otp-button" onClick={onGetOtp}>
+              <button className={`get-otp-button ${mobileNo ? '' : 'disabled'}`} onClick={mobileNo ? onGetOtp : () => { }}>
                 {STRINGS.GET_OTP}
               </button>
               <div className="otp-container">
@@ -126,6 +149,7 @@ export default function Seller({ onRegister }) {
                 id="supply-type"
                 name="type"
                 onChange={onTypeChange}
+                defaultValue="all"
                 value={type}
               >
                 <option value="all">{STRINGS.ALL}</option>
@@ -185,8 +209,8 @@ export default function Seller({ onRegister }) {
             submitCheck
               ? onSubmit
               : (e) => {
-                  e.preventDefault();
-                }
+                e.preventDefault();
+              }
           }
         >
           {STRINGS.SUBMIT}
