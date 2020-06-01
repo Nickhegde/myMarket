@@ -5,6 +5,17 @@ export const LOGINTYPE = {
   LOGIN_FAILED: "login_failed",
 };
 
+export const OTP = {
+  SEND: "send",
+  SUCCEEDED: "succeeded",
+  FAILED: "failed",
+};
+
+export const USER = {
+  SET: "set",
+  CLEAR: "clear"
+}
+
 export const REGISTERTYPE = {
   REGISTER: "register",
   REGISTER_IN_PROGRESS: "register_in_progress",

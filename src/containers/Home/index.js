@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { logoutUser } from "actions";
+import { logoutUser, clearUserDetails } from "actions";
 import { ROUTES, STRINGS } from "consts";
 
 import "./Home.scss";
@@ -20,10 +20,10 @@ export default function Home() {
             {STRINGS.LOGOUT}
           </button>
         ) : (
-          <Link className="home-login-signup-btn" to={ROUTES.LOGIN}>
-            {STRINGS.LOGIN} / {STRINGS.SIGNUP}
-          </Link>
-        )}
+            <Link className="home-login-signup-btn" to={ROUTES.LOGIN}>
+              {STRINGS.LOGIN} / {STRINGS.SIGNUP}
+            </Link>
+          )}
       </div>
     </div>
   );

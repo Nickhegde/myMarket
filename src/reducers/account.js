@@ -1,4 +1,4 @@
-import { LOGINTYPE, LOGOUTTYPE, REGISTERTYPE } from "actions/types";
+import { LOGINTYPE, OTP, USER, LOGOUTTYPE, REGISTERTYPE } from "actions/types";
 import { INITIAL_STATE } from "./initialState";
 
 export default (state = INITIAL_STATE.ACCOUNT, action) => {
@@ -9,6 +9,14 @@ export default (state = INITIAL_STATE.ACCOUNT, action) => {
       return { ...state, loginErrorMessage: "", userInfo: true };
     case LOGINTYPE.LOGIN_IN_PROGRESS:
       return { ...state, loginInprogress: action.payload };
+    case OTP.FAILED:
+      return { ...state, otpErrorMessage: action.payload };
+    case OTP.SUCCEEDED:
+      return { ...state, otpErrorMessage: "", otpSent: true };
+    case USER.SET:
+      return { ...state, user: action.payload };
+    case USER.CLEAR:
+      return { ...state, user: action.payload };
     case REGISTERTYPE.REGISTER_FAILED:
       return { ...state, registerErrorMessage: action.payload };
     case REGISTERTYPE.REGISTER_SUCCEEDED:
