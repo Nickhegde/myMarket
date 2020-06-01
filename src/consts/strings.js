@@ -9,6 +9,7 @@ export default {
   GST_NO: "GST No",
   HOME: "Home",
   LOGIN: "Login",
+  LOGOUT: "Logout",
   LOOKING_SELL: "Looking to Sell",
   LOOKING_BUY: "Looking to Buy",
   MOBILE_NO: "Mobile no",
